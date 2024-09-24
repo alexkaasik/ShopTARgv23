@@ -1,0 +1,40 @@
+﻿@model ShopTARgv23.Models.Spaceships.SpaceshipCreateUpdateViewModel
+
+<h1>Update</h1>
+
+<div>
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="CreatedAt" type="hidden" />
+        <input asp-for="ModifiedAt" type="hidden" />
+
+        <div class="form-group row">
+            <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+            <div class="form-group row">
+                <input asp-action="Name" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="CargoWeight" class="col-sm-2 col-form-label"></label>
+            <div class="form-group row">
+                <input asp-action="CargoWeight" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Crew" class="col-sm-2 col-form-label"></label>
+            <div class="form-group row">
+                <input asp-action="Crew" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="EnginePower" class="col-sm-2 col-form-label"></label>
+            <div class="form-group row">
+                <input asp-action="EnginePower" class="form-control" />
+            </div>
+        </div>
+        <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
+    </form>
+</div>

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopTARgv23.Core.Domain
+﻿namespace ShopTARgv23.Models.Spaceships
 {
-    public class Spaceship
+    public class SpaceshipDeleteViewModel
     {
         public Guid Id { get; set; }
 
@@ -14,7 +8,7 @@ namespace ShopTARgv23.Core.Domain
 
         public string Type { get; set; }
 
-        public DateTime BuildDate { get; set; }
+        public DateTime BuiltDate { get; set; }
 
         public int CargoWeight { get; set; }
 
@@ -22,7 +16,6 @@ namespace ShopTARgv23.Core.Domain
 
         public int EnginePower { get; set; }
 
-        //only in database
         public DateTime CreatedAt { get; set; }
 
         public DateTime ModifiedAt { get; set; }
