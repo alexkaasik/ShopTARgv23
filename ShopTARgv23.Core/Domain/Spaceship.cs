@@ -8,13 +8,13 @@ namespace ShopTARgv23.Core.Domain
 {
     public class Spaceship
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Name { get; set; }
 
         public string Type { get; set; }
 
-        public DateTime BuildDate { get; set; }
+        public DateTime BuiltDate { get; set; }
 
         public int CargoWeight { get; set; }
 

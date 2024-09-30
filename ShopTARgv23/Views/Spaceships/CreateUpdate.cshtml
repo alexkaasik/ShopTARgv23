@@ -1,6 +1,14 @@
 ﻿@model ShopTARgv23.Models.Spaceships.SpaceshipCreateUpdateViewModel
 
-<h1>Update</h1>
+@if (Model.Id != null)
+{
+    <h1>Update</h1>
+}
+else
+{
+    <h1>Create</h1>
+},
+
 
 <div>
     <form method="post" enctype="multipart/form-data">

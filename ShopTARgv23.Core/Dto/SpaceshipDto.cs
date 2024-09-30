@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopTARgv23.Core.Dto
 {
     public class SpaceshipDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Name { get; set; }
 
@@ -22,10 +19,17 @@ namespace ShopTARgv23.Core.Dto
 
         public int EnginePower { get; set; }
 
+        public List<IFormFile> Files { get; set; }
+        
+        public IEnumerable<FileToApiDto> Image { get; set; }
+            = new List<FileToApiDto>();
+
+
         // Only in db
         public DateTime CreatedAt { get; set; }
-
+        
         public DateTime ModifiedAt { get; set; }
     }
 }
+
 

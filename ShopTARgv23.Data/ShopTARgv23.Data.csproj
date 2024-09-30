@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\ShopTARgv23.Core\ShopTARgv23.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShopTARgv23.Core\ShopTARgv23.Core.csproj" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

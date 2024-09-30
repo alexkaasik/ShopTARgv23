@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopTARgv23.Core.Domain;
-using ShopTARgv23.Core.ServiceInterface;
-using ShopTARgv23.Data;
+﻿using ShopTARgv23.Core.Domain;
+using ShopTARgv23.Core.Dto;
 
 namespace ShopTARgv23.Core.ServiceInterface
 {
@@ -14,5 +8,9 @@ namespace ShopTARgv23.Core.ServiceInterface
         Task<Spaceship> DetailsAsync(Guid id);
 
         Task<Spaceship> Update(SpaceshipDto dto);
+        
+        Task<Spaceship> Delete(Guid dto);
+        
+        Task<Spaceship> Create(SpaceshipDto dto);
     }
 }

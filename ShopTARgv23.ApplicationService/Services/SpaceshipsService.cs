@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using ShopTARgv23.Data;
 using ShopTARgv23.Core.Dto;
+using ShopTARgv23.Core.ServiceInterface;
+using ShopTARgv23.Core.Domain;
 
 namespace ShopTARgv23.ApplicationService.Services
 {
-    internal class SpaceshipsService
+    public class SpaceshipsServices : ISpaceshipServices
     {
-        private readonly SpaceshipsService _context;
+        private readonly ShopTARgv23Context _context;
+        private readonly IFileServices _fileServices;
 
-        public SpaceshipsService(SpaceshipsService context)
+        public SpaceshipsServices
+            (
+                ShopTARgv23Context context,
+                IFileServices fileServices
+            )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
         public async Task<Spaceship>DetailsAsync(Guid id)
@@ -23,6 +27,26 @@ namespace ShopTARgv23.ApplicationService.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
+        }
+
+        public async Task<Spaceship> Create(SpaceshipDto dto)
+        {
+            Spaceship spaceship = new();
+
+            spaceship.Id = Guid.NewGuid();
+            spaceship.Name = dto.Name;
+            spaceship.Type = dto.Type;
+            spaceship.BuiltDate = dto.BuiltDate;
+            spaceship.CargoWeight = dto.CargoWeight;
+            spaceship.EnginePower = dto.EnginePower;
+            spaceship.CreatedAt = DateTime.Now;
+            spaceship.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceship);
+
+            await _context.Spaceships.AddAsync(spaceship);
+            await _context.SaveChangesAsync();
+
+            return spaceship;
         }
 
         public async Task<Spaceship> Update(SpaceshipDto dto)
@@ -40,17 +64,17 @@ namespace ShopTARgv23.ApplicationService.Services
             domain.ModifiedAt = DateTime.Now;
 
             _context.Spaceships.Update(domain);
-            await _context.SaveChangeAsync();
+            await _context.SaveChangesAsync();
 
             return domain;
         }
-        public async Task<Spaceship> Delete(Grud id)
+        public async Task<Spaceship> Delete(Guid id)
         {
             var spaceship = await _context.Spaceships
                 .FirstOrDefaultAsync(x =>x.Id == id);
 
             _context.Spaceships.Remove(spaceship);
-            await _context.SaveChangeAsync();
+            await _context.SaveChangesAsync();
 
             return spaceship;
         }
