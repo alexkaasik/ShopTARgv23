@@ -2,7 +2,7 @@
 {
     public class SpaceshipCreateUpdateViewModel
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Name { get; set; }
 
@@ -15,6 +15,11 @@
         public int Crew { get; set; }
 
         public int EnginePower { get; set; }
+
+        public List<IFormFile> Files { get; set; }
+
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; }
+            = new List<FileToApiViewModel>();
 
         public DateTime CreatedAt { get; set; }
 
