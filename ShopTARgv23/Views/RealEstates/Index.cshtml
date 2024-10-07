@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ShopTARgv23.Models.RealEstates.RealEstatesIndexViewModel>
+
+@{
+    int rowNumber = 1;
+}
+
+<div>
+    <a asp-action="create" asp-controller="RealEstate" type="submit" class="btn btn-primary">Create</a>
+</div>
+
+<div class="h1">
+    RealEstate
+</div>
+
+<form method="post">
+    <table>
+        <thed>
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Location</th>
+                <th scope="col">Size</th>
+                <th scope="col">RoomNumber</th>
+                <th scope="col"></th>
+            </tr>
+        </thed>
+        <tbody>
+            @foreach (var RealEstate in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@RealEstate.Location</td>
+                    <td>@RealEstate.Size</td>
+                    <td>@RealEstate.RoomNumber</td>
+                    <td>
+                    </td>
+                </tr>
+
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+</form>
