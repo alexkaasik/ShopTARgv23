@@ -25,6 +25,39 @@ namespace ShopTARgv23.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kindergarten",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChildrenCount = table.Column<int>(type: "int", nullable: false),
+                    KindergartenName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Teacher = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kindergarten", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RealEstates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<double>(type: "float", nullable: false),
+                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RealEstates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Spaceships",
                 columns: table => new
                 {
@@ -49,6 +82,12 @@ namespace ShopTARgv23.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "FileToApis");
+
+            migrationBuilder.DropTable(
+                name: "Kindergarten");
+
+            migrationBuilder.DropTable(
+                name: "RealEstates");
 
             migrationBuilder.DropTable(
                 name: "Spaceships");
