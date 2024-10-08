@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Hosting;
-using ShopTARgv23.Core.ServiceInterface;
-
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
+using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace ShopTARgv23.ApplicationService.Services
 {
@@ -23,6 +24,7 @@ namespace ShopTARgv23.ApplicationService.Services
 
         public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
+
             if ( dto.Files != null && dto.Files.Count > 0 )
             { 
                 if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
@@ -32,9 +34,10 @@ namespace ShopTARgv23.ApplicationService.Services
 
                 foreach (var image in dto.Files)
                 {
-                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "\\multipleFileUpload\\");
+                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
-                    string filePath = Path.Combine(_webHost.ContentRootPath, uniqueFileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
@@ -47,14 +50,11 @@ namespace ShopTARgv23.ApplicationService.Services
                             SpaceshipId = spaceship.Id,
                         };
 
-
-
                         _context.FileToApis.AddAsync(path);
                     }
                 }
             }
         }
-
 
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
@@ -76,6 +76,7 @@ namespace ShopTARgv23.ApplicationService.Services
         }
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
+
             foreach (var dto in dtos)
             {
                 var imageId = await _context.FileToApis

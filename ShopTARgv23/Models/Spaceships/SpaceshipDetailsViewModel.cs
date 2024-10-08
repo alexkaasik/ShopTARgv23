@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ShopTARgv23.Models.Spaceships
+﻿namespace ShopTARgv23.Models.Spaceships
 {
     public class SpaceshipDetailsViewModel
     {
@@ -11,8 +9,9 @@ namespace ShopTARgv23.Models.Spaceships
         public int CargoWeight { get; set; }
         public int Crew { get; set; }
         public int EnginePower { get; set; }
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; }
+            = new List<FileToApiViewModel>();
         public DateTime CreatedAt { get; set; }
-
         public DateTime ModifiedAt { get; set; }
     }
 }

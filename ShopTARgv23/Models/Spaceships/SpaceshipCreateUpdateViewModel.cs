@@ -18,8 +18,8 @@
 
         public List<IFormFile> Files { get; set; }
 
-        public List<FileToApiViewModels> FileToApiViewModels { get; set; }
-            = new List<FileToApiViewModels>();
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; }
+            = new List<FileToApiViewModel>();
 
         public DateTime CreatedAt { get; set; }
 
