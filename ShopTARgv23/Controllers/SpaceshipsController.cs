@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using ShopTARgv23.Models.Spaceships;
-
 
 namespace ShopTARgv23.Controllers
 {
@@ -18,13 +17,16 @@ namespace ShopTARgv23.Controllers
         public SpaceshipsController
             (
                 ShopTARgv23Context context,
+
                 ISpaceshipServices spaceshipServices,
                 IFileServices fileServices
+
             )
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
             _fileServices = fileServices;
+
         }
 
         public IActionResult Index()
@@ -88,7 +90,6 @@ namespace ShopTARgv23.Controllers
         {
             var spaceship = await _spaceshipServices.DetailsAsync(id);
 
-
             if (spaceship == null)
             {
                 return NotFound();
@@ -115,7 +116,7 @@ namespace ShopTARgv23.Controllers
             vm.ModifiedAt = spaceship.ModifiedAt;
             vm.FileToApiViewModels.AddRange(images);
 
-            return View(vm);
+            return View("CreateUpdate", vm);
         }
 
         [HttpGet]
@@ -146,7 +147,7 @@ namespace ShopTARgv23.Controllers
             vm.Crew = spaceship.Crew;
             vm.EnginePower = spaceship.EnginePower;
             vm.FileToApiViewModels.AddRange(images);
-            
+
             return View("CreateUpdate", vm);
         }
 
@@ -173,6 +174,7 @@ namespace ShopTARgv23.Controllers
                         SpaceshipsId = x.SpaceshipsId
                     }).ToArray()
             };
+
 
             var result = await _spaceshipServices.Update(dto);
 

@@ -7,6 +7,7 @@ using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using static System.Net.Mime.MediaTypeNames;
 
+
 namespace ShopTARgv23.ApplicationService.Services
 {
     public class FileServices : IFileServices
@@ -23,8 +24,9 @@ namespace ShopTARgv23.ApplicationService.Services
 
         public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
-            if (dto.Files != null && dto.Files.Count > 0)
-            {
+
+            if ( dto.Files != null && dto.Files.Count > 0 )
+            { 
                 if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
                 {
                     Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
@@ -35,6 +37,7 @@ namespace ShopTARgv23.ApplicationService.Services
                     string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
@@ -58,7 +61,8 @@ namespace ShopTARgv23.ApplicationService.Services
             var imageId = await _context.FileToApis
                 .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imageId.ExistingFilePath;
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+                + imageId.ExistingFilePath;
 
             if (File.Exists(filePath))
             {
@@ -89,6 +93,7 @@ namespace ShopTARgv23.ApplicationService.Services
                 _context.FileToApis.Remove(imageId);
                 await _context.SaveChangesAsync();
             }
+
             return null;
         }
     }

@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopTARgv23.Core.Domain;
+
+using ShopTARgv23.Data;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
-using ShopTARgv23.Data;
+using ShopTARgv23.Core.Domain;
 
 namespace ShopTARgv23.ApplicationService.Services
 {
@@ -64,6 +65,7 @@ namespace ShopTARgv23.ApplicationService.Services
             domain.ModifiedAt = DateTime.Now;
             _fileServices.FilesToApi(dto, domain);
 
+
             _context.Spaceships.Update(domain);
             await _context.SaveChangesAsync();
 
@@ -85,6 +87,7 @@ namespace ShopTARgv23.ApplicationService.Services
                 }).ToArrayAsync();
 
             await _fileServices.RemoveImagesFromApi(images);
+            
             _context.Spaceships.Remove(spaceship);
             await _context.SaveChangesAsync();
 

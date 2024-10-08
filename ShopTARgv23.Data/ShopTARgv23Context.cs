@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopTARgv23.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopTARgv23.Data
 {
@@ -9,6 +10,9 @@ namespace ShopTARgv23.Data
             : base(options) { }
 
         public DbSet<Spaceship> Spaceships { get; set; }
+
+
+        public DbSet<RealEstate> RealEstates { get; set; }
 
         public DbSet<FileToApi> FileToApis { get; set; }
 
