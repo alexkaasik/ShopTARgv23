@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopTARgv23.ApplicationService.Services;
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using ShopTARgv23.Models.Spaceships;
+
 
 namespace ShopTARgv23.Controllers
 {
@@ -102,7 +102,7 @@ namespace ShopTARgv23.Controllers
                     ImageId = y.Id
                 }).ToArrayAsync();
 
-            var vm = new SpaceshipCreateUpdateViewModel();
+            var vm = new SpaceshipDetailsViewModel();
 
             vm.Id = spaceship.Id;
             vm.Name = spaceship.Name;
@@ -115,7 +115,7 @@ namespace ShopTARgv23.Controllers
             vm.ModifiedAt = spaceship.ModifiedAt;
             vm.FileToApiViewModels.AddRange(images);
 
-            return View("CreateUpdate", vm);
+            return View(vm);
         }
 
         [HttpGet]
@@ -135,7 +135,8 @@ namespace ShopTARgv23.Controllers
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
                 }).ToArrayAsync();
-            var vm = new SpaceshipDetailsViewModel();
+            
+            var vm = new SpaceshipCreateUpdateViewModel();
 
             vm.Id = spaceship.Id;
             vm.Name = spaceship.Name;
@@ -145,6 +146,7 @@ namespace ShopTARgv23.Controllers
             vm.Crew = spaceship.Crew;
             vm.EnginePower = spaceship.EnginePower;
             vm.FileToApiViewModels.AddRange(images);
+            
             return View("CreateUpdate", vm);
         }
 
@@ -181,7 +183,7 @@ namespace ShopTARgv23.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var spaceship = await _spaceshipServices.DetailsAsync(id);
@@ -190,6 +192,13 @@ namespace ShopTARgv23.Controllers
             {
                 return NotFound();
             }
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageId = y.Id
+                }).ToArrayAsync();
 
             var vm = new SpaceshipDeleteViewModel();
 
@@ -203,6 +212,7 @@ namespace ShopTARgv23.Controllers
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
 
+            vm.FileToApiViewModels.AddRange(images);
             // Peate tegema Delete view modeli ja siin ära mappima spaceship muutujuga
 
             return View(vm);

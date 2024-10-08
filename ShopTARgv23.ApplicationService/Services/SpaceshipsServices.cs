@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopTARgv23.Data;
+using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
-using ShopTARgv23.Core.Domain;
+using ShopTARgv23.Data;
 
 namespace ShopTARgv23.ApplicationService.Services
 {
@@ -62,6 +62,7 @@ namespace ShopTARgv23.ApplicationService.Services
             domain.EnginePower = dto.EnginePower;
             domain.CreatedAt = dto.CreatedAt;
             domain.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, domain);
 
             _context.Spaceships.Update(domain);
             await _context.SaveChangesAsync();

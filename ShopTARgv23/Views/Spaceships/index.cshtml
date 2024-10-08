@@ -5,7 +5,7 @@
 }
 
 <div>
-    <a asp-action="create" asp-controller="Spaceship" type="submit" class="btn btn-primary">Create</a>
+    <a asp-action="create" asp-controller="Spaceships" type="submit" class="btn btn-primary">Create</a>
 </div>
 
 <div class="h1">
@@ -13,7 +13,7 @@
 </div>
 
 <form method="post">
-    <table>
+    <table class="table table-hover">
         <thed>
             <tr>
                 <th scope="col">Nr</th>
@@ -34,7 +34,9 @@
                     <td>@spaceships.BuiltDate</td>
                     <td>@spaceships.EnginePower</td>
                     <td>
-
+                        <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-info">Details</a>
+                        <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-primary">Update</a>
+                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceships.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
 
