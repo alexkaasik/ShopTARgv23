@@ -75,5 +75,27 @@ namespace ShopTARgv23.Controllers
 
             return RedirectToAction(nameof(Index), vm);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var realEstate = await _RealEstateServices.DetailsAsync(id);
+
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstatesDetailsViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Location = realEstate.Location;
+            vm.Size = realEstate.Size;
+            vm.RoomNumber = realEstate.RoomNumber;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.ModifiedAt = realEstate.ModifiedAt;
+
+            return View(vm);
+        }
     }
 }

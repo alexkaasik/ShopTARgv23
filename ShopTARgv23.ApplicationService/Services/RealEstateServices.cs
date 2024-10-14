@@ -1,4 +1,5 @@
-﻿using ShopTARgv23.Core.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
@@ -38,6 +39,14 @@ namespace ShopTARgv23.ApplicationService.Services
             await _context.SaveChangesAsync();
 
             return realEstate;
+        }
+
+        public async Task<RealEstate> DetailsAsync(Guid id)
+        {
+            var result = await _context.RealEstates
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
         }
     }
 }
