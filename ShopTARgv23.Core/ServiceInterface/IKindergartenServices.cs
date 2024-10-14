@@ -10,5 +10,7 @@ namespace ShopTARgv23.Core.ServiceInterface
         Task<Kindergarten> DetailsAsync(Guid id);
 
         Task<Kindergarten> Update(KindergartenDto dto);
+
+        Task<Kindergarten> Delete(Guid dto);
     }
 }
