@@ -33,7 +33,11 @@
                     <td>@Kindergarten.ChildrenCount</td>
                     <td>@Kindergarten.KindergartenName</td>
                     <td>@Kindergarten.Teacher</td>
-                    <td></td>
+                    <td>
+                        <a asp-action="details" asp-controller="Kindergartens" asp-route-id="@Kindergarten.Id" class="btn btn-info">Details</a>
+                        <a asp-action="update" asp-controller="Kindergartens" asp-route-id="@Kindergarten.Id" class="btn btn-primary">Update</a>
+                        <a asp-action="delete" asp-controller="Kindergartens" asp-route-id="@Kindergarten.Id" class="btn btn-outline-danger">Delete</a>
+                    </td>
                 </tr>
 
                 //rowNumber++;
