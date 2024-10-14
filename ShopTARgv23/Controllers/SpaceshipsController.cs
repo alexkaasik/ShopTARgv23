@@ -116,7 +116,7 @@ namespace ShopTARgv23.Controllers
             vm.ModifiedAt = spaceship.ModifiedAt;
             vm.FileToApiViewModels.AddRange(images);
 
-            return View("CreateUpdate", vm);
+            return View(vm);
         }
 
         [HttpGet]

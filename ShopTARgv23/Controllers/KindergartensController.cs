@@ -93,7 +93,7 @@ namespace ShopTARgv23.Controllers
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
 
-            return View("CreateUpdate", vm);
+            return View(vm);
         }
 
         [HttpGet]
@@ -105,7 +105,6 @@ namespace ShopTARgv23.Controllers
             {
                 return NotFound();
             }
-
 
             var vm = new KindergartensCreateUpdateViewModel();
 
@@ -132,10 +131,8 @@ namespace ShopTARgv23.Controllers
                 KindergartenName = vm.KindergartenName,
                 Teacher = vm.Teacher,
                 CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt
-                
+                UpdatedAt = vm.UpdatedAt  
             };
-
 
             var result = await _KindergartenServices.Update(dto);
 
@@ -164,8 +161,6 @@ namespace ShopTARgv23.Controllers
             vm.Teacher = kindergarten.Teacher;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
-
-
 
             return View(vm);
         }
