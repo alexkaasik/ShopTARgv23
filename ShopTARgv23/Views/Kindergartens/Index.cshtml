@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShopTARgv23.Models.Kindergartens.KindergartensIndexViewModel>
 
 @{
-    //int rowNumber = 1;
+    int rowNumber = 1;
 }
 
 <div>
@@ -28,7 +28,7 @@
             @foreach (var Kindergarten in Model)
             {
                 <tr>
-                    <td></td>
+                    <td>@rowNumber</td>
                     <td>@Kindergarten.GroupName</td>
                     <td>@Kindergarten.ChildrenCount</td>
                     <td>@Kindergarten.KindergartenName</td>
@@ -40,7 +40,7 @@
                     </td>
                 </tr>
 
-                //rowNumber++;
+                rowNumber++;
             }
         </tbody>
     </table>

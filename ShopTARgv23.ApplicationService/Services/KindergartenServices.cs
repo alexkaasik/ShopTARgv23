@@ -35,5 +35,31 @@ namespace ShopTARgv23.ApplicationService.Services
 
             return kindergarten;
         }
+
+        public async Task<Kindergarten> DetailsAsync(Guid id)
+        {
+            var result = await _context.Kindergartens
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<Kindergarten> Update(KindergartenDto dto)
+        {
+            Kindergarten domain = new();
+
+            domain.Id = dto.Id;
+            domain.GroupName = dto.GroupName;
+            domain.ChildrenCount = dto.ChildrenCount;
+            domain.KindergartenName = dto.KindergartenName;
+            domain.Teacher = dto.Teacher;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.UpdatedAt = DateTime.Now;
+
+            _context.Kindergartens.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
+        }
     }
 }
