@@ -48,5 +48,22 @@ namespace ShopTARgv23.ApplicationService.Services
 
             return result;
         }
+
+        public async Task<RealEstate> Update(RealEstateDto dto)
+        {
+            RealEstate domain = new();
+
+            domain.Id = dto.Id;
+            domain.Location = dto.Location;
+            domain.Size = dto.Size;
+            domain.RoomNumber = dto.RoomNumber;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.ModifiedAt = DateTime.Now;
+
+            _context.RealEstates.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
+        }
     }
 }
