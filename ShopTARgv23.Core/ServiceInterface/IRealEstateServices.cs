@@ -11,5 +11,6 @@ namespace ShopTARgv23.Core.ServiceInterface
 
         Task<RealEstate> Update(RealEstateDto dto);
 
+        Task<RealEstate> Delete(Guid dto);
     }
 }

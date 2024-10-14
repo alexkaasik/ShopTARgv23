@@ -9,6 +9,7 @@ using ShopTARgv23.Data;
 using ShopTARgv23.Models.RealEstates;
 using ShopTARgv23.Models.Spaceships;
 using System.Drawing;
+using System.Xml;
 
 namespace ShopTARgv23.Controllers
 {
@@ -146,6 +147,38 @@ namespace ShopTARgv23.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var realEstate = await _RealEstateServices.DetailsAsync(id);
 
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstatesDeleteViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Location = realEstate.Location;
+            vm.Size = realEstate.Size;
+            vm.RoomNumber = realEstate.RoomNumber;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.ModifiedAt = realEstate.ModifiedAt;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var realEstate = await _RealEstateServices.Delete(id);
+
+            if (realEstate == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
