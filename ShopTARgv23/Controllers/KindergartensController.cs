@@ -7,6 +7,7 @@ using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using ShopTARgv23.Models.Kindergartens;
 using ShopTARgv23.Models.Spaceships;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopTARgv23.Controllers
 {
@@ -15,15 +16,18 @@ namespace ShopTARgv23.Controllers
 
         private readonly ShopTARgv23Context _context;
         private readonly IKindergartenServices _KindergartenServices;
+        private readonly IFileServices _fileServices;
 
         public KindergartensController
             (
                 ShopTARgv23Context context,
-                IKindergartenServices KindergartenServices
+                IKindergartenServices KindergartenServices,
+                IFileServices fileServices
             )
         {
             _context = context;
             _KindergartenServices = KindergartenServices;
+            _fileServices = fileServices;
         }
 
         public IActionResult Index()
@@ -60,7 +64,16 @@ namespace ShopTARgv23.Controllers
                 KindergartenName = vm.KindergartenName,
                 Teacher = vm.Teacher,
                 CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt
+                UpdatedAt = vm.UpdatedAt,
+                Files = vm.Files,
+                Image = vm.Image
+                    .Select(x => new FileToDatabaseDto
+                    {
+                        Id = x.ImageId,
+                        ImageData = x.ImageData,
+                        ImageTitle = x.ImageTitle,
+                        IdFromModel = x.KindergartensId
+                    }).ToArray()
             };
 
             var result = await _KindergartenServices.Create(dto);
@@ -83,6 +96,17 @@ namespace ShopTARgv23.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FileToDatabases
+                .Where(x => x.IdFromModel == id)
+                .Select(y => new KindergartensImageViewModel
+                {
+                    KindergartensId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
             var vm = new KindergartensDetailViewModel();
 
             vm.Id = kindergarten.Id;
@@ -92,6 +116,7 @@ namespace ShopTARgv23.Controllers
             vm.Teacher = kindergarten.Teacher;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(images);
 
             return View(vm);
         }
@@ -106,6 +131,17 @@ namespace ShopTARgv23.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FileToDatabases
+                .Where(x => x.IdFromModel == id)
+                .Select(y => new KindergartensImageViewModel
+                {
+                    KindergartensId = y.IdFromModel,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
             var vm = new KindergartensCreateUpdateViewModel();
 
             vm.Id = kindergarten.Id;
@@ -115,6 +151,7 @@ namespace ShopTARgv23.Controllers
             vm.Teacher = kindergarten.Teacher;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(images);
 
             return View("CreateUpdate", vm);
         }
@@ -131,7 +168,15 @@ namespace ShopTARgv23.Controllers
                 KindergartenName = vm.KindergartenName,
                 Teacher = vm.Teacher,
                 CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt  
+                UpdatedAt = vm.UpdatedAt,
+                Image = vm.Image
+                    .Select(x => new FileToDatabaseDto
+                    {
+                        Id = x.ImageId,
+                        ImageData = x.ImageData,
+                        ImageTitle = x.ImageTitle,
+                        IdFromModel = x.KindergartensId
+                    }).ToArray()
             };
 
             var result = await _KindergartenServices.Update(dto);
@@ -152,6 +197,17 @@ namespace ShopTARgv23.Controllers
                 return NotFound();
             }
 
+            var image = await _context.FileToDatabases
+                .Where(x => x.IdFromModel == id)
+                .Select(y => new KindergartensImageViewModel
+                {
+                    KindergartensId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
             var vm = new KindergartensDeleteViewModel();
 
             vm.Id = kindergarten.Id;
@@ -161,6 +217,7 @@ namespace ShopTARgv23.Controllers
             vm.Teacher = kindergarten.Teacher;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
+            vm.Image.AddRange(image);
 
             return View(vm);
         }

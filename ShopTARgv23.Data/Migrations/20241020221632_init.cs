@@ -25,16 +25,30 @@ namespace ShopTARgv23.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FileToDatabases",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    IdFromModel = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileToDatabases", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Kindergartens",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ChildrenCount = table.Column<int>(type: "int", nullable: false),
-                    KindergartenName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Teacher = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChildrenCount = table.Column<int>(type: "int", nullable: true),
+                    KindergartenName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Teacher = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,6 +96,9 @@ namespace ShopTARgv23.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "FileToApis");
+
+            migrationBuilder.DropTable(
+                name: "FileToDatabases");
 
             migrationBuilder.DropTable(
                 name: "Kindergartens");

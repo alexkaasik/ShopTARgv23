@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopTARgv23.Core.Domain;
-using Microsoft.EntityFrameworkCore;
 
 namespace ShopTARgv23.Data
 {
@@ -16,6 +15,8 @@ namespace ShopTARgv23.Data
         public DbSet<Kindergarten> Kindergartens { get; set; }
 
         public DbSet<FileToApi> FileToApis { get; set; }
+
+        public DbSet<FileToDatabase> FileToDatabases { get; set; }
 
     }
 }
