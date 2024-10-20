@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ShopTARgv23.Core\ShopTARgv23.Core.csproj" />
     <ProjectReference Include="..\ShopTARgv23.Data\ShopTARgv23.Data.csproj" />
+    <ProjectReference Include="..\ShopTARgv23.RealEstateTest\ShopTARgv23.RealEstateTest.csproj" />
   </ItemGroup>
 
 </Project>

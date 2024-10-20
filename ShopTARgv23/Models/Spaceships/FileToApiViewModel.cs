@@ -4,8 +4,8 @@
     {
         public Guid? ImageId { get; set; }
 
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
 
-        public Guid SpaceshipsId { get; set; }
+        public Guid? SpaceshipsId { get; set; }
     }
 }
