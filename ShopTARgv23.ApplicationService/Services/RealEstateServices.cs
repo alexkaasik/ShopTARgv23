@@ -1,20 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ShopTARgv23.Core.Domain;
+﻿using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ShopTARgv23.ApplicationService.Services
 {
     public class RealEstateServices : IRealEstateServices
-
     {
-
         private readonly ShopTARgv23Context _context;
         private readonly IFileServices _fileServices;
 
