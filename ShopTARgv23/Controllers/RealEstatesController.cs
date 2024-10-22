@@ -180,6 +180,7 @@ namespace ShopTARgv23.Controllers
                 BuildingType = vm.BuildingType,
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
+                Files = vm.Files,
                 Image = vm.Image
                     .Select(x => new FileToDatabaseDto
                     {
