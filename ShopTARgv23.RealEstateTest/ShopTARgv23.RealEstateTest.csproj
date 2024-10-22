@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ShopTARgv23.ApplicationService\ShopTARgv23.ApplicationService.csproj" />
     <ProjectReference Include="..\ShopTARgv23.Core\ShopTARgv23.Core.csproj" />
     <ProjectReference Include="..\ShopTARgv23.Data\ShopTARgv23.Data.csproj" />
+    <ProjectReference Include="..\ShopTARgv23\ShopTARgv23.csproj" />
   </ItemGroup>
 
   <ItemGroup>

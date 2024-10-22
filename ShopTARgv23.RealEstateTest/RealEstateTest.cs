@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ShopTARgv23.ApplicationService.Services;
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
@@ -79,6 +80,8 @@ namespace ShopTARgv23.RealEstateTest
             var addRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
 
             var result = await Svc<IRealEstateServices>().Delete((Guid)addRealEstate.Id);
+
+            Assert.False(string.IsNullOrEmpty(result.Location));
         }
 
         [Fact]
@@ -93,7 +96,7 @@ namespace ShopTARgv23.RealEstateTest
             domain.Id = Guid.Parse("82c6af77-2c7d-4eae-8e1e-29269c3c9862");
             domain.Location = "adsg";
             domain.RoomNumber = 1;
-            domain.BuildingType = "asd";
+            domain.BuildingType = "ashd";
             domain.CreatedAt = DateTime.UtcNow;
             domain.ModifiedAt = DateTime.UtcNow;
 
@@ -106,6 +109,7 @@ namespace ShopTARgv23.RealEstateTest
             Assert.DoesNotMatch(domain.BuildingType, dto.BuildingType);
             
         }
+        
         [Fact]
         public async Task Should_UpdataRealEstate_WhenUpdateDataVersion2()
         {
@@ -123,6 +127,58 @@ namespace ShopTARgv23.RealEstateTest
             Assert.NotEqual(CreateRealEstate.Size, result.Size);
             Assert.DoesNotMatch(CreateRealEstate.BuildingType, result.BuildingType);
 
+        }
+
+        [Fact]
+        public async Task ShouldNot_UpdataRealEstate_WhenUpdateData() 
+        {
+            RealEstateDto dto = MockRealEstateData();
+            var CreateRealEstate = await Svc<IRealEstateServices>().Create(dto);
+
+            RealEstateDto NullUpdate = MockNullRealEstateData();
+            var result = await Svc<IRealEstateServices>().Create(NullUpdate);
+
+            var NullId = NullUpdate.Id;
+
+            Assert.True(dto.Id == NullId);
+        }
+
+        [Fact]
+        public async Task ShouldNot_UpdataRealEstate_WhenNotUpdateData()
+        {
+            RealEstateDto dto = MockRealEstateData();
+            var CreateRealEstate = await Svc<IRealEstateServices>().Create(dto);
+
+            RealEstateDto update = MockNullRealEstateData();
+            var result = await Svc<IRealEstateServices>().Create(update);
+
+            Assert.NotEqual(result.Id, dto.Id);
+        }
+
+        /*
+         * Mõtelge ise välja üks test
+         * võib teha meeskonnatööd
+         */
+
+        [Fact]
+        public async Task Should_ReturnNull_WhenRealEstateDoesNotExist()
+        {
+            Guid NonExistingId = Guid.NewGuid();
+
+            var result = await Svc<IRealEstateServices>().DetailsAsync(NonExistingId);
+
+            Assert.Null(result);
+        }
+
+        public async Task Should_CreateDataEntries()
+        {
+            RealEstateDto mock = MockRealEstateData();
+            var CreateRealEstate = await Svc<IRealEstateServices>().Create(mock);
+
+            Assert.NotNull(CreateRealEstate.Id);
+
+            Assert.NotNull(CreateRealEstate.CreatedAt);
+            Assert.NotNull(CreateRealEstate.ModifiedAt);
         }
 
         private RealEstateDto MockRealEstateData()
@@ -153,6 +209,23 @@ namespace ShopTARgv23.RealEstateTest
             };
 
             return realEstate;
+
+        }
+
+        private RealEstateDto MockNullRealEstateData()
+        {
+            RealEstateDto NullDto = new()
+            {
+                Id = null,
+                Location = "asd",
+                Size = 100,
+                RoomNumber = 1,
+                BuildingType = "af",
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+            };
+
+            return NullDto;
 
         }
     }
