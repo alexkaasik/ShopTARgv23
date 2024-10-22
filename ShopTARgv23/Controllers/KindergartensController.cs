@@ -135,7 +135,7 @@ namespace ShopTARgv23.Controllers
                 .Where(x => x.IdFromModel == id)
                 .Select(y => new KindergartensImageViewModel
                 {
-                    KindergartensId = y.IdFromModel,
+                    KindergartensId = y.Id,
                     ImageId = y.Id,
                     ImageData = y.ImageData,
                     ImageTitle = y.ImageTitle,
@@ -161,7 +161,6 @@ namespace ShopTARgv23.Controllers
         {
             var dto = new KindergartenDto()
             {
-
                 Id = vm.Id,
                 GroupName = vm.GroupName,
                 ChildrenCount = vm.ChildrenCount,
@@ -169,6 +168,7 @@ namespace ShopTARgv23.Controllers
                 Teacher = vm.Teacher,
                 CreatedAt = vm.CreatedAt,
                 UpdatedAt = vm.UpdatedAt,
+                Files = vm.Files,
                 Image = vm.Image
                     .Select(x => new FileToDatabaseDto
                     {
@@ -176,7 +176,7 @@ namespace ShopTARgv23.Controllers
                         ImageData = x.ImageData,
                         ImageTitle = x.ImageTitle,
                         IdFromModel = x.KindergartensId
-                    }).ToArray()
+                    }).ToArray(),
             };
 
             var result = await _KindergartenServices.Update(dto);
@@ -185,6 +185,7 @@ namespace ShopTARgv23.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -231,6 +232,24 @@ namespace ShopTARgv23.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(KindergartensImageViewModel file)
+        {
+            var dto = new FileToDatabaseDto()
+            {
+                Id = file.ImageId
+            };
+
+            var image = await _fileServices.RemoveImageFromDatabase(dto);
+
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }

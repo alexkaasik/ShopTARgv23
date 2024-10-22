@@ -56,15 +56,16 @@ namespace ShopTARgv23.ApplicationService.Services
 
         public async Task<Kindergarten> Update(KindergartenDto dto)
         {
-            Kindergarten domain = new();
-
-            domain.Id = dto.Id;
-            domain.GroupName = dto.GroupName;
-            domain.ChildrenCount = dto.ChildrenCount;
-            domain.KindergartenName = dto.KindergartenName;
-            domain.Teacher = dto.Teacher;
-            domain.CreatedAt = dto.CreatedAt;
-            domain.UpdatedAt = DateTime.Now;
+            var domain = new Kindergarten()
+            {
+                Id = dto.Id,
+                GroupName = dto.GroupName,
+                ChildrenCount = dto.ChildrenCount,
+                KindergartenName = dto.KindergartenName,
+                Teacher = dto.Teacher,
+                CreatedAt = dto.CreatedAt,
+                UpdatedAt = DateTime.Now,
+            };
 
             if (dto.Files != null)
             {
@@ -72,6 +73,7 @@ namespace ShopTARgv23.ApplicationService.Services
             }
 
             _context.Kindergartens.Update(domain);
+
             await _context.SaveChangesAsync();
 
             return domain;
