@@ -3,8 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-./TARgv23CarShop/multipleFileUpload/*
-
 # User-specific files
 *.rsuser
 *.suo
@@ -363,4 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/ShopTARgv23/multipleFileUpload
+/ShopTARgv23/MultipleFileUpload/*
