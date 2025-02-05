@@ -11,7 +11,7 @@ namespace ShopTARgv23.ApplicationServices.Services
 
         public async Task<AccuLocationWeatherResultDto> AccuWeatherResults(AccuLocationWeatherResultDto dto)
         {
-            string AccuApiKey = "CIJ0x6AD8Ap3fWE1JJRItAybLA7sHQTF";
+            string AccuApiKey = "";
             string url = $"http://dataservice.accuweather.com/locations/v1/cities/search?apikey={AccuApiKey}&q={dto.CityName}";
 
             using (WebClient client = new WebClient())
