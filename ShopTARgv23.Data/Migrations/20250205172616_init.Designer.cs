@@ -12,7 +12,7 @@ using ShopTARgv23.Data;
 namespace ShopTARgv23.Data.Migrations
 {
     [DbContext(typeof(ShopTARgv23Context))]
-    [Migration("20241028130044_init")]
+    [Migration("20250205172616_init")]
     partial class init
     {
         /// <inheritdoc />

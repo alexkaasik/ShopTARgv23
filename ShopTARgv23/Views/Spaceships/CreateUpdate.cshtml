@@ -1,12 +1,12 @@
 @model ShopTARgv23.Models.Spaceships.SpaceshipCreateUpdateViewModel
 
 @if (Model.Id.HasValue)
-{
-    <h1>Update</h1>
+{   
+    ViewData["Title"] = "Spaceship Update";
 }
 else
 {
-    <h1>Create</h1>
+    ViewData["Title"] = "Spaceship Create";
 }
 
 <div>

@@ -1,5 +1,5 @@
 /*
-	Landed by HTML5 UP
+	Editorial by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
@@ -7,6 +7,7 @@
 (function($) {
 
 	var	$window = $(window),
+		$head = $('head'),
 		$body = $('body');
 
 	// Breakpoints.
@@ -15,236 +16,247 @@
 			large:    [ '981px',   '1280px' ],
 			medium:   [ '737px',   '980px'  ],
 			small:    [ '481px',   '736px'  ],
-			xsmall:   [ null,      '480px'  ]
+			xsmall:   [ '361px',   '480px'  ],
+			xxsmall:  [ null,      '360px'  ],
+			'xlarge-to-max':    '(min-width: 1681px)',
+			'small-to-xlarge':  '(min-width: 481px) and (max-width: 1680px)'
 		});
 
-	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+	// Stops animations/transitions until the page has ...
 
-	// Touch mode.
-		if (browser.mobile)
-			$body.addClass('is-touch');
+		// ... loaded.
+			$window.on('load', function() {
+				window.setTimeout(function() {
+					$body.removeClass('is-preload');
+				}, 100);
+			});
 
-	// Scrolly links.
-		$('.scrolly').scrolly({
-			speed: 2000
-		});
+		// ... stopped resizing.
+			var resizeTimeout;
 
-	// Dropdowns.
-		$('#nav > ul').dropotron({
-			alignment: 'right',
-			hideDelay: 350
-		});
+			$window.on('resize', function() {
 
-	// Nav.
+				// Mark as resizing.
+					$body.addClass('is-resizing');
 
-		// Title Bar.
-			$(
-				'<div id="titleBar">' +
-					'<a href="#navPanel" class="toggle"></a>' +
-					'<span class="title">' + $('#logo').html() + '</span>' +
-				'</div>'
-			)
-				.appendTo($body);
+				// Unmark after delay.
+					clearTimeout(resizeTimeout);
 
-		// Panel.
-			$(
-				'<div id="navPanel">' +
-					'<nav>' +
-						$('#nav').navList() +
-					'</nav>' +
-				'</div>'
-			)
-				.appendTo($body)
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'left',
-					target: $body,
-					visibleClass: 'navPanel-visible'
-				});
+					resizeTimeout = setTimeout(function() {
+						$body.removeClass('is-resizing');
+					}, 100);
 
-	// Parallax.
-	// Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
-		if (browser.name == 'ie'
-		||	browser.mobile) {
+			});
 
-			$.fn._parallax = function() {
+	// Fixes.
 
-				return $(this);
-
-			};
-
-		}
-		else {
-
-			$.fn._parallax = function() {
-
-				$(this).each(function() {
+		// Object fit images.
+			if (!browser.canUse('object-fit')
+			||	browser.name == 'safari')
+				$('.image.object').each(function() {
 
 					var $this = $(this),
-						on, off;
+						$img = $this.children('img');
 
-					on = function() {
+					// Hide original image.
+						$img.css('opacity', '0');
 
+					// Set background.
 						$this
-							.css('background-position', 'center 0px');
-
-						$window
-							.on('scroll._parallax', function() {
-
-								var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
-
-								$this.css('background-position', 'center ' + (pos * -0.15) + 'px');
-
-							});
-
-					};
-
-					off = function() {
-
-						$this
-							.css('background-position', '');
-
-						$window
-							.off('scroll._parallax');
-
-					};
-
-					breakpoints.on('<=medium', off);
-					breakpoints.on('>medium', on);
+							.css('background-image', 'url("' + $img.attr('src') + '")')
+							.css('background-size', $img.css('object-fit') ? $img.css('object-fit') : 'cover')
+							.css('background-position', $img.css('object-position') ? $img.css('object-position') : 'center');
 
 				});
 
-				return $(this);
+	// Sidebar.
+		var $sidebar = $('#sidebar'),
+			$sidebar_inner = $sidebar.children('.inner');
 
-			};
+		// Inactive by default on <= large.
+			breakpoints.on('<=large', function() {
+				$sidebar.addClass('inactive');
+			});
 
-			$window
-				.on('load resize', function() {
-					$window.trigger('scroll');
+			breakpoints.on('>large', function() {
+				$sidebar.removeClass('inactive');
+			});
+
+		// Hack: Workaround for Chrome/Android scrollbar position bug.
+			if (browser.os == 'android'
+			&&	browser.name == 'chrome')
+				$('<style>#sidebar .inner::-webkit-scrollbar { display: none; }</style>')
+					.appendTo($head);
+
+		// Toggle.
+			$('<a href="#sidebar" class="toggle">Toggle</a>')
+				.appendTo($sidebar)
+				.on('click', function(event) {
+
+					// Prevent default.
+						event.preventDefault();
+						event.stopPropagation();
+
+					// Toggle.
+						$sidebar.toggleClass('inactive');
+
 				});
 
-		}
+		// Events.
 
-	// Spotlights.
-		var $spotlights = $('.spotlight');
+			// Link clicks.
+				$sidebar.on('click', 'a', function(event) {
 
-		$spotlights
-			._parallax()
-			.each(function() {
+					// >large? Bail.
+						if (breakpoints.active('>large'))
+							return;
 
-				var $this = $(this),
-					on, off;
+					// Vars.
+						var $a = $(this),
+							href = $a.attr('href'),
+							target = $a.attr('target');
 
-				on = function() {
+					// Prevent default.
+						event.preventDefault();
+						event.stopPropagation();
 
-					var top, bottom, mode;
+					// Check URL.
+						if (!href || href == '#' || href == '')
+							return;
 
-					// Use main <img>'s src as this spotlight's background.
-						$this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
+					// Hide sidebar.
+						$sidebar.addClass('inactive');
 
-					// Side-specific scrollex tweaks.
-						if ($this.hasClass('top')) {
+					// Redirect to href.
+						setTimeout(function() {
 
-							mode = 'top';
-							top = '-20%';
-							bottom = 0;
+							if (target == '_blank')
+								window.open(href);
+							else
+								window.location.href = href;
 
-						}
-						else if ($this.hasClass('bottom')) {
+						}, 500);
 
-							mode = 'bottom-only';
-							top = 0;
-							bottom = '20%';
+				});
 
-						}
-						else {
+			// Prevent certain events inside the panel from bubbling.
+				$sidebar.on('click touchend touchstart touchmove', function(event) {
 
-							mode = 'middle';
-							top = 0;
-							bottom = 0;
+					// >large? Bail.
+						if (breakpoints.active('>large'))
+							return;
 
-						}
+					// Prevent propagation.
+						event.stopPropagation();
 
-					// Add scrollex.
-						$this.scrollex({
-							mode:		mode,
-							top:		top,
-							bottom:		bottom,
-							initialize:	function(t) { $this.addClass('inactive'); },
-							terminate:	function(t) { $this.removeClass('inactive'); },
-							enter:		function(t) { $this.removeClass('inactive'); },
+				});
 
-							// Uncomment the line below to "rewind" when this spotlight scrolls out of view.
+			// Hide panel on body click/tap.
+				$body.on('click touchend', function(event) {
 
-							//leave:	function(t) { $this.addClass('inactive'); },
+					// >large? Bail.
+						if (breakpoints.active('>large'))
+							return;
 
-						});
+					// Deactivate.
+						$sidebar.addClass('inactive');
 
-				};
+				});
 
-				off = function() {
+		// Scroll lock.
+		// Note: If you do anything to change the height of the sidebar's content, be sure to
+		// trigger 'resize.sidebar-lock' on $window so stuff doesn't get out of sync.
 
-					// Clear spotlight's background.
-						$this.css('background-image', '');
+			$window.on('load.sidebar-lock', function() {
 
-					// Remove scrollex.
-						$this.unscrollex();
+				var sh, wh, st;
 
-				};
+				// Reset scroll position to 0 if it's 1.
+					if ($window.scrollTop() == 1)
+						$window.scrollTop(0);
 
-				breakpoints.on('<=medium', off);
-				breakpoints.on('>medium', on);
+				$window
+					.on('scroll.sidebar-lock', function() {
+
+						var x, y;
+
+						// <=large? Bail.
+							if (breakpoints.active('<=large')) {
+
+								$sidebar_inner
+									.data('locked', 0)
+									.css('position', '')
+									.css('top', '');
+
+								return;
+
+							}
+
+						// Calculate positions.
+							x = Math.max(sh - wh, 0);
+							y = Math.max(0, $window.scrollTop() - x);
+
+						// Lock/unlock.
+							if ($sidebar_inner.data('locked') == 1) {
+
+								if (y <= 0)
+									$sidebar_inner
+										.data('locked', 0)
+										.css('position', '')
+										.css('top', '');
+								else
+									$sidebar_inner
+										.css('top', -1 * x);
+
+							}
+							else {
+
+								if (y > 0)
+									$sidebar_inner
+										.data('locked', 1)
+										.css('position', 'fixed')
+										.css('top', -1 * x);
+
+							}
+
+					})
+					.on('resize.sidebar-lock', function() {
+
+						// Calculate heights.
+							wh = $window.height();
+							sh = $sidebar_inner.outerHeight() + 30;
+
+						// Trigger scroll.
+							$window.trigger('scroll.sidebar-lock');
+
+					})
+					.trigger('resize.sidebar-lock');
+
+				});
+
+	// Menu.
+		var $menu = $('#menu'),
+			$menu_openers = $menu.children('ul').find('.opener');
+
+		// Openers.
+			$menu_openers.each(function() {
+
+				var $this = $(this);
+
+				$this.on('click', function(event) {
+
+					// Prevent default.
+						event.preventDefault();
+
+					// Toggle.
+						$menu_openers.not($this).removeClass('active');
+						$this.toggleClass('active');
+
+					// Trigger resize (sidebar lock).
+						$window.triggerHandler('resize.sidebar-lock');
+
+				});
 
 			});
-
-	// Wrappers.
-		var $wrappers = $('.wrapper');
-
-		$wrappers
-			.each(function() {
-
-				var $this = $(this),
-					on, off;
-
-				on = function() {
-
-					$this.scrollex({
-						top:		250,
-						bottom:		0,
-						initialize:	function(t) { $this.addClass('inactive'); },
-						terminate:	function(t) { $this.removeClass('inactive'); },
-						enter:		function(t) { $this.removeClass('inactive'); },
-
-						// Uncomment the line below to "rewind" when this wrapper scrolls out of view.
-
-						//leave:	function(t) { $this.addClass('inactive'); },
-
-					});
-
-				};
-
-				off = function() {
-					$this.unscrollex();
-				};
-
-				breakpoints.on('<=medium', off);
-				breakpoints.on('>medium', on);
-
-			});
-
-	// Banner.
-		var $banner = $('#banner');
-
-		$banner
-			._parallax();
 
 })(jQuery);

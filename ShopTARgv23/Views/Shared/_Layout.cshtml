@@ -1,66 +1,162 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ShopTARgv23</title>
     
+
+	
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShopTARpv23.style.css" asp-append-version="true" />
 
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    
     <link rel="stylesheet" href="~/css/fontawesome-all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/noscript.css" asp-append-version="true" />
-
+	
+	<link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShopTARgv23</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Spaceships" asp-action="Index">Spaceship</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RealEstates" asp-action="Index">RealEstate</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ShopTARgv23 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+
+				<!-- Header -->
+				<header id="header">
+					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><strong>Maker</strong> by not Aleksander Kaasik </a>
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+					</ul>
+				</header>
+
+				<!-- Content -->
+				<section>
+					<header class="main">
+						<h1>@ViewData["Title"]</h1>
+					</header>
+
+					<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+
+					<div class="container">
+						<main role="main" class="pb-3">
+							@RenderBody()
+						</main>
+					</div>
+
+				</section>
+
+			</div>
+		</div>
+
+		<!-- Sidebar -->
+		<div id="sidebar">
+			<div class="inner">
+
+				<!-- Search -->
+				<section id="search" class="alt">
+					<form method="post" action="#">
+						<input type="text" name="query" id="query" placeholder="Search" />
+					</form>
+				</section>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<header class="major">
+						<h2>Menu</h2>
+					</header>
+
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Spaceships" asp-action="Index">Spaceship</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="RealEstates" asp-action="Index">RealEstate</a>
+						</li>
+					</ul>
+				</nav>
+
+				<!-- 
+				Section 
+				<section>
+					<header class="major">
+						<h2>Ante interdum</h2>
+					</header>
+					<div class="mini-posts">
+						<article>
+							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+						</article>
+						<article>
+							<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+						</article>
+						<article>
+							<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+							<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+						</article>
+					</div>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</section>
+				-->
+				<!-- Section -->
+
+				<section>
+					<header class="major">
+						<h2>Get in touch</h2>
+					</header>
+					<p>Hello all context are test info</p>
+					<ul class="contact">
+						<li class="icon solid fa-envelope"><a href="#">info@email.test.loc</a></li>
+						<li class="icon solid fa-phone">(+372) 452-2864 </li>
+						<li class="icon solid fa-home">
+							S�pruse pst 182<br />
+							13424 Tallinn
+						</li>
+					</ul>
+				</section>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<!-- <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					<div class="container">
+						&copy; 2024 - ShopTARgv23 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+					</div>
+				</footer>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!--
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/main.js" asp-append-version="true"></script>
-    <script src="~/js/breakpoints.min.js" asp-append-version="true"></script>
-    <script src="~/js/browser.min.js" asp-append-version="true"></script>
-    <script src="~/js/jquery.dropotron.min.js" asp-append-version="true"></script>
-    <script src="~/js/jquery.scrollex.min.js" asp-append-version="true"></script>
-    <script src="~/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+	<script src="~/js/jquery.dropotron.min.js" asp-append-version="true"></script>
+	<script src="~/js/jquery.scrollex.min.js" asp-append-version="true"></script>
+	<script src="~/js/jquery.scrolly.min.js" asp-append-version="true"></script>
+	-->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/browser.min.js"></script>
+	<script src="/js/breakpoints.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
