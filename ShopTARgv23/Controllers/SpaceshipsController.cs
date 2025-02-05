@@ -135,7 +135,7 @@ namespace ShopTARgv23.Controllers
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
                 }).ToArrayAsync();
-            
+
             var vm = new SpaceshipCreateUpdateViewModel();
 
             vm.Id = spaceship.Id;
@@ -165,6 +165,7 @@ namespace ShopTARgv23.Controllers
                 EnginePower = vm.EnginePower,
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
+                Files = vm.Files,
                 Image = vm.FileToApiViewModels
                     .Select(x => new FileToApiDto
                     {

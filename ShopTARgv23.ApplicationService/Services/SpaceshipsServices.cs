@@ -78,7 +78,7 @@ namespace ShopTARgv23.ApplicationService.Services
 
 
             var images = await _context.FileToApis
-                .Where(x => x.Id == id)
+                .Where(x => x.SpaceshipId == id)
                 .Select(y => new FileToApiDto
                 {
                     Id = y.Id,

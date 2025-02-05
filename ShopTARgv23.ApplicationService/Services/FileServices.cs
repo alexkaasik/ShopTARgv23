@@ -27,14 +27,14 @@ namespace ShopTARgv23.ApplicationService.Services
 
             if (dto.Files != null && dto.Files.Count > 0)
             {
-                if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
+                if (!Directory.Exists(_webHost.ContentRootPath + "\\MultipleFileUpload\\"))
                 {
-                    Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
+                    Directory.CreateDirectory(_webHost.ContentRootPath + "\\MultipleFileUpload\\");
                 }
 
                 foreach (var image in dto.Files)
                 {
-                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
+                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "MultipleFileUpload");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -60,7 +60,7 @@ namespace ShopTARgv23.ApplicationService.Services
             var imageId = await _context.FileToApis
                 .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+            var filePath = _webHost.ContentRootPath + "\\MultipleFileUpload\\"
                 + imageId.ExistingFilePath;
 
             if (File.Exists(filePath))
@@ -81,7 +81,7 @@ namespace ShopTARgv23.ApplicationService.Services
                 var imageId = await _context.FileToApis
                     .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
 
-                var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+                var filePath = _webHost.ContentRootPath + "\\MultipleFileUpload\\"
                 + imageId.ExistingFilePath;
 
                 if (File.Exists(filePath))
