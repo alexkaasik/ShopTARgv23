@@ -3,6 +3,7 @@ using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using ShopTARgv23.ApplicationService.Services;
 using Microsoft.Extensions.FileProviders;
+using ShopTARgv23.ApplicationServices.Services;
 
 namespace ShopTARgv23
 {
@@ -18,6 +19,7 @@ namespace ShopTARgv23
             builder.Services.AddScoped<ISpaceshipServices, SpaceshipsServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
             builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
+            builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 
             builder.Services.AddDbContext<ShopTARgv23Context>(options => 
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -1,0 +1,21 @@
+﻿@model ShopTARgv23.Models.AccuWeathers.AccuWeatherSearchViewModel
+
+@{
+    ViewData["Title"] = "AccuWeather";
+}
+
+<div class="form-group row">
+    <form action="/" method="post">
+        <div>
+            <h2>Searth the forcast in a city</h2>
+            <label asp-for="CityName" style="font-family: Arial" />
+            <input asp-for="CityName" class="form-control" />
+            <span asp-validation-for="CityName" class="text-danger" />
+        </div>
+        <div class="container">
+            <div class="form-group col-md-offset 3">
+                <button type="submit" asp-controller="AccuWeathers" asp-action="SearchCity">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
