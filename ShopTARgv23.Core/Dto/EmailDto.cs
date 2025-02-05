@@ -1,4 +1,6 @@
-﻿namespace ShopTARgv23.Core.Dto
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ShopTARgv23.Core.Dto
 {
     public class EmailDto
     {
@@ -7,5 +9,7 @@
         public string Subject { get; set; } = string.Empty;
 
         public string Body { get; set; } = string.Empty;
-    }
+
+		public List<IFormFile> Attachment { get; set; } = new List<IFormFile>();
+	}
 }

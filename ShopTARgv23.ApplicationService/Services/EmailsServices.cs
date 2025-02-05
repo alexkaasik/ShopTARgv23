@@ -23,11 +23,32 @@ namespace ShopTARgv23.ApplicationService.Services
 			email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
 			email.To.Add(MailboxAddress.Parse(dto.To));
 			email.Subject = dto.Subject;
-			email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+			//email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+			//{
+			//	Text = dto.Body
+			//};
+
+			var builder = new BodyBuilder
 			{
-				Text = dto.Body
+				HtmlBody = dto.Body
 			};
+
+			foreach (var file in dto.Attachment)
+			{
+				if (file.Length > 0)
+				{
+					using (var stream = new MemoryStream())
+					{
+						file.CopyTo(stream);
+						stream.Position = 0;
+						builder.Attachments.Add(file.FileName, stream.ToArray());
+					}
+				}
+			}
+			email.Body = builder.ToMessageBody();
+
 			using var smtp = new SmtpClient();
+
 			smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
 			smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
 			smtp.Send(email);

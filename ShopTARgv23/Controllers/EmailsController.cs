@@ -18,12 +18,14 @@ namespace ShopTARgv23.Controllers
 
         public IActionResult SendEmail(EmailsViewModel vm)
         {
-            var dto = new EmailDto()
+			var files = Request.Form.Files.Any() ? Request.Form.Files.ToList() : new List<IFormFile>();
+			var dto = new EmailDto()
             {
                 To = vm.To,
                 Subject = vm.Subject,
-                Body = vm.Body,
-            };
+				Body = vm.Body,
+				Attachment = files
+			};
 
             _emailsServuces.SendEmail(dto);
 
