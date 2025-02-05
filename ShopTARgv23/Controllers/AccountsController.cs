@@ -34,7 +34,8 @@ namespace ShopTARgv23.Controllers
                     UserName = vm.Email,
                     Email = vm.Email,
                     City = vm.City,
-                };
+					FirstName = vm.FirstName,
+				};
                 var result = await _userManager.CreateAsync(user, vm.Password);
                 if (result.Succeeded)
                 {
@@ -103,5 +104,12 @@ namespace ShopTARgv23.Controllers
             }
             return View(model);
         }
-    }
+
+		[HttpPost]
+		public async Task<IActionResult> Logout()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home");
+		}
+	}
 }
