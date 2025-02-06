@@ -1,4 +1,8 @@
-﻿@if (ViewBag.ErrorTitle == null)
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+@if (ViewBag.ErrorTitle == null)
 {
     <h3>
         An error occured while processing your request. The support
